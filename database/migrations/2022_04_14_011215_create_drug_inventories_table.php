@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('drugs', function (Blueprint $table) {
+        Schema::create('drug_inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('drug_name');
-            $table->string('description');
+            $table->foreignId('drug_id')->constrained()->onDelete('cascade');
+            $table->bigInteger('quantity')->unsigned();
+            $table->string('batch_no');
+            $table->date('expiration_date');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('drugs');
+        Schema::dropIfExists('drugs_inventory');
     }
 };

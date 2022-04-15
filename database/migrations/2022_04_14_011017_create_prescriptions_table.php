@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')->constrained();
-            $table->string('doctor_id')->constrained();
+            $table->foreignId('doctor_id')->constrained();
             $table->foreignId('drug_id')->constrained();
             $table->string('dosage');
+            $table->bigInteger('quantity')->unsigned();
             $table->longText('directions');
+            $table->bigInteger('duration');
             $table->bigInteger('repeat')->default('0');
             $table->timestamps();
         });

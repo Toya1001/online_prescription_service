@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('mx_no');
+            $table->date('dob');
+            $table->string('gender');
             $table->string('trn');
             $table->string('address');
             $table->string('city');
