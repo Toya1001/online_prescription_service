@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\DrugController;
+use App\Http\Controllers\DrugInventoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dummyapi;
@@ -29,3 +32,7 @@ Route::post('save', [usersData::class, 'store']);
 Route::put('update/{id}', [usersData::class, 'update']);
 Route::get('user/{word}', [usersData::class, 'search']);
 Route::delete('delete/{id}', [usersData::class, 'destroy']);
+
+Route::apiResource('doctor', DoctorController::class);
+Route::apiResource('drug', DrugController::class);
+Route::apiResource('inventory', DrugInventoryController::class);

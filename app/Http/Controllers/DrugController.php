@@ -14,7 +14,8 @@ class DrugController extends Controller
      */
     public function index()
     {
-        //
+        $drug = Drug::all();
+         return response()->json($drug);
     }
 
     /**
@@ -36,17 +37,36 @@ class DrugController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'drug_name'=> 'required',
+            'generic_name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $drug =  Drug::create($request->all());
+        return response()->json([
+            'message' => 'Record Added',
+            'drug' => $drug
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Drug  $drug
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Drug $drug)
+    public function show($id)
     {
         //
+        $entry = Drug::find($id);
+       if ($entry){
+           return response()->json([
+               'message' => 'Record located',
+                'drug' => $entry
+           ]);
+       }
+       return response()->json('Data not found', 404);
     }
 
     /**
@@ -64,12 +84,31 @@ class DrugController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Drug  $drug
+     * @param  int     $iid
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Drug $drug)
+    public function update(Request $request, $id)
     {
         //
+        $request->validation([
+            'drug_name' => 'required',
+            'generic_name' => 'required',
+            'description' => 'required',
+        ]);
+
+       $entry = Drug::find($id);
+
+       if(is_null($entry)){
+           return response()->json('Record not found', 404);
+       }
+
+       $entry->update($request->all());
+       return response()->json([
+           'message' => 'Record Updated',
+           'drug' => $entry
+       ]);
+
+
     }
 
     /**
@@ -78,8 +117,10 @@ class DrugController extends Controller
      * @param  \App\Models\Drug  $drug
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Drug $drug)
+    public function destroy( $id)
     {
         //
+        Drug::destroy($id);
+        return "Record Deleted";
     }
 }
