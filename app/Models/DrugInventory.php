@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class DrugInventory extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'drug_id',
+        'quantity',
+        'batch_no',
+        'expiration_date'
+    ];
+    
 }
