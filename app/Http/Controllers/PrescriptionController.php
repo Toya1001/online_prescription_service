@@ -15,6 +15,9 @@ class PrescriptionController extends Controller
     public function index()
     {
         //
+        $prescription = Prescription::all();
+
+        return response()->json($prescription);
     }
 
     /**
@@ -35,18 +38,45 @@ class PrescriptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'patient_id' => 'required',
+            'doctor_id' => 'required',
+            'drug_id' => 'required',
+            'dosage' => 'required',
+            'quantity' => 'required',
+            'directions' => 'required',
+            'duration' => 'required',
+            'repeat' => 'required',
+
+        ]);
+
+        $result = Prescription::create($request->all());
+        if ($result) {
+            return response()->json([
+                'message' => 'Record updated',
+                'patient' => $result
+            ]);
+        }
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Prescription  $prescription
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Prescription $prescription)
+    public function show($id)
     {
         //
+        $prescription = Prescription::find($id);
+        if ($prescription) {
+            return response()->json([
+                'message' => 'Record found',
+                'Patient' => $prescription
+            ]);
+        }
+        return response()->json('Record not found', 404);
     }
 
     /**
@@ -64,12 +94,32 @@ class PrescriptionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Prescription  $prescription
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Prescription $prescription)
+    public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'patient_id' => 'required',
+            'doctor_id' => 'required',
+            'drug_id' => 'required',
+            'dosage' => 'required',
+            'quantity' => 'required',
+            'directions' => 'required',
+            'duration' => 'required',
+            'repeat' => 'required',
+
+        ]);
+        $result =Prescription::find($id);
+        if (is_null($result)) {
+            return response()->json('Record not found', 404);
+        }
+        $result->update($request->all());
+        return response()->json([
+            'message' => 'Record Updated',
+            'prescription' => $result
+        ]);
     }
 
     /**

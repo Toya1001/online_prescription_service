@@ -15,6 +15,8 @@ class MedicalHistoryController extends Controller
     public function index()
     {
         //
+        $history = MedicalHistory::all();
+        return response()->json($history);
     }
 
     /**
@@ -35,18 +37,40 @@ class MedicalHistoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'patient_id' => 'required',
+            'allergies' => 'required',
+            'health_conditions' => 'required',
+            'pregnant_nursing' => 'required',
+        ]);
+
+        $result = MedicalHistory::create($request->all());
+        if ($result) {
+            return response()->json([
+                'message' => 'Record updated',
+                'patient' => $result
+            ]);
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MedicalHistory  $medicalHistory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(MedicalHistory $medicalHistory)
+    public function show($id)
     {
         //
+        $history = MedicalHistory::find($id);
+        if ($history) {
+            return response()->json([
+                'message' => 'Record found',
+                'Patient' => $history
+            ]);
+        }
+        return response()->json('Record not found', 404);
     }
 
     /**
@@ -64,22 +88,39 @@ class MedicalHistoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MedicalHistory  $medicalHistory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MedicalHistory $medicalHistory)
+    public function update(Request $request, $id )
     {
         //
+        $request->validate([
+            'patient_id' => 'required',
+            'allergies' => 'required',
+            'health_conditions' => 'required',
+            'pregnant_nursing' => 'required',
+        ]);
+        $history = MedicalHistory ::find($id);
+        if (is_null($history)) {
+            return response()->json('Record not found', 404);
+        }
+        $history->update($request->all());
+        return response()->json([
+            'message' => 'Record Updated',
+            'patient' => $history
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\MedicalHistory  $medicalHistory
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MedicalHistory $medicalHistory)
+    public function destroy($id)
     {
         //
+        MedicalHistory::destroy($id);
+        return 204;
     }
 }

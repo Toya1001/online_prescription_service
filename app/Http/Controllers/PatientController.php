@@ -15,6 +15,9 @@ class PatientController extends Controller
     public function index()
     {
         //
+        $patient = Patient::all();
+
+        return response()->json($patient);
     }
 
     /**
@@ -36,17 +39,47 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'user_id' => 'required',
+            'mx_no' => 'required',
+            'dob' => 'required',
+            'gender' => 'required',
+            'trn' => 'required',
+            'city' => 'required',
+            'parish' => 'required',
+            'address' => 'required',
+            'tel_no' => 'required'
+        ]);
+
+        $patient = Patient::create($request->all());
+        if ($patient) {
+            return response()->json([
+                'message' => 'Record updated',
+                'patient' => $patient
+            ]);
+        }
+        return response()->json('Error updating record');
     }
+
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Patient  $patient
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Patient $patient)
+    public function show($id)
     {
         //
+
+        $patient = Patient::find($id);
+        if (is_null($patient)) {
+            return response()->json('Record not found', 404);
+        }
+        return response()->json([
+            'message' => 'Record found',
+            'Patient' => $patient
+        ]);
     }
 
     /**
@@ -64,22 +97,47 @@ class PatientController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Patient  $patient
+     * @param   int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patient $patient)
+    public function update(Request $request, $id)
     {
         //
+
+        $request->validate([
+            'user_id' => 'required',
+            'mx_no' => 'required',
+            'dob' => 'required',
+            'gender' => 'required',
+            'trn' => 'required',
+            'city' => 'required',
+            'parish' => 'required',
+            'address' => 'required',
+            'tel_no' => 'required'
+        ]);
+
+        $patient = Patient::find($id);
+        if(is_null($patient))
+        {
+            return response()->json('Record not found'. 404);
+        }
+        
+        $patient->update($request->all());
+        return response()->json([
+           'message' => 'Record Updated',
+           'patient' => $patient
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Patient  $patient
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Patient $patient)
+    public function destroy($id)
     {
-        //
+        Patient::destroy($id);
+        return 204;
     }
 }

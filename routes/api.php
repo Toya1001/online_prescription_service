@@ -3,6 +3,9 @@
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DrugController;
 use App\Http\Controllers\DrugInventoryController;
+use App\Http\Controllers\MedicalHistoryController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PharmacistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dummyapi;
@@ -34,5 +37,9 @@ Route::get('user/{word}', [usersData::class, 'search']);
 Route::delete('delete/{id}', [usersData::class, 'destroy']);
 
 Route::apiResource('doctor', DoctorController::class);
+Route::apiResource('patient', PatientController::class);
+Route::apiResource('pharmacist', PharmacistController::class);
 Route::apiResource('drug', DrugController::class);
 Route::apiResource('inventory', DrugInventoryController::class);
+Route::apiResource('history', MedicalHistoryController::class);
+
