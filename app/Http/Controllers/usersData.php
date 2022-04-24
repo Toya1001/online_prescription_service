@@ -10,7 +10,8 @@ class usersData extends Controller
     //
     function list($id=null)
     {
-        return $id?User::find($id):User::all();
+        $results = $id?User::find($id):User::all();
+        return response()->json($results);
     }
 
     // function singleData($id)

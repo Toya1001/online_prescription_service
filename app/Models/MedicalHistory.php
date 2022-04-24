@@ -16,4 +16,9 @@ class MedicalHistory extends Model
         'pregnant_nursing',
 
     ];
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }

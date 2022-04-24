@@ -18,4 +18,13 @@ class Prescription extends Model
         'duration',
         'repeat',
     ];
+
+    public function patient(){
+        return $this->belongsTo(Patient::class);
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
+    }
 }

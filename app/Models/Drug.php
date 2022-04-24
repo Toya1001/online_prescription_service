@@ -14,4 +14,8 @@ class Drug extends Model
         'generic_name',
         'description',
     ];
+
+    public function drugInventory(){
+        return $this->hasOne(DrugInventory::class);
+    }
 }

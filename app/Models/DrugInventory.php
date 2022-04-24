@@ -15,5 +15,10 @@ class DrugInventory extends Model
         'batch_no',
         'expiration_date'
     ];
+
+    public function drug()
+    {
+        return $this->belongsTo(Drug::class);
+    }
     
 }

@@ -15,8 +15,7 @@ class PatientController extends Controller
     public function index()
     {
         //
-        $patient = Patient::all();
-
+        $patient = Patient::with('user')->get();
         return response()->json($patient);
     }
 

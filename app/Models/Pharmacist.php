@@ -15,4 +15,9 @@ class Pharmacist extends Model
         'work_name',
         'work_address'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
