@@ -15,7 +15,7 @@ class PatientController extends Controller
     public function index()
     {
         //
-        $patient = Patient::with('user')->get();
+        $patient = Patient::with('user', 'medicalHistory', 'pPrescriptions')->get();
         return response()->json($patient);
     }
 

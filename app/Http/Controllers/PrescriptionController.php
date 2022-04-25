@@ -15,7 +15,7 @@ class PrescriptionController extends Controller
     public function index()
     {
         //
-        $prescription = Prescription::all();
+        $prescription = Prescription::with('patient','doctor', 'drugs')->get();
 
         return response()->json($prescription);
     }

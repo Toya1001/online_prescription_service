@@ -18,4 +18,8 @@ class Drug extends Model
     public function drugInventory(){
         return $this->hasOne(DrugInventory::class);
     }
+
+    public function drugPrescriptions(){
+        return $this->hasMany(Prescription::class);
+    }
 }

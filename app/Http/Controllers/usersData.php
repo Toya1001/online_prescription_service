@@ -8,16 +8,17 @@ use Illuminate\Support\Facades\Validator;
 class usersData extends Controller
 {
     //
-    function list($id=null)
+    function list()
     {
-        $results = $id?User::find($id):User::all();
+        $results = User::all();
         return response()->json($results);
     }
-
-    // function singleData($id)
-    // {
-    //     return User::find($id);
-    // }
+ 
+    function show($id)
+    {
+        $result = User::find($id);
+        return response()->json($result);
+    }
 
     function store(Request $request)
     {
@@ -25,7 +26,7 @@ class usersData extends Controller
             "fname"=> "required|string|min:2",
             "lname"=>"required|string|min:2",
             "email"=>"required|email",
-            "password"=>"required|confirmed|min:8"
+            "password"=>"required|min:8"
         );
         
         $valid = Validator::make($request->all(), $rules);
@@ -50,7 +51,7 @@ class usersData extends Controller
             "fname" => "required|string|min:2",
             "lname" => "required|string|min:2",
             "email" => "required|email",   
-            "password" => "required|confirmed|min:8"
+            "password" => "required|min:8"
         );
 
         $valid = Validator::make($request->all(), $rules);

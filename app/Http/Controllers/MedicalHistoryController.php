@@ -15,7 +15,7 @@ class MedicalHistoryController extends Controller
     public function index()
     {
         //
-        $history = MedicalHistory::all();
+        $history = MedicalHistory::with('patient')->get();
         return response()->json($history);
     }
 
@@ -46,7 +46,7 @@ class MedicalHistoryController extends Controller
         ]);
 
         $result = MedicalHistory::create($request->all());
-        if ($result) {
+        if (!empty($result)) {
             return response()->json([
                 'message' => 'Record updated',
                 'patient' => $result
@@ -57,7 +57,7 @@ class MedicalHistoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  mixed  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -88,7 +88,7 @@ class MedicalHistoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  mixed  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id )

@@ -14,7 +14,7 @@ class DrugController extends Controller
      */
     public function index()
     {
-        $drug = Drug::all();
+        $drug = Drug::with('drugInventory', 'drugPrescriptions' )->get();
          return response()->json($drug);
     }
 
