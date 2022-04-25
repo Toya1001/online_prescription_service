@@ -105,7 +105,7 @@ class PatientController extends Controller
 
         $request->validate([
             'user_id' => 'required',
-            'mx_no' => 'required',
+            // 'mx_no' => 'required',
             'dob' => 'required',
             'gender' => 'required',
             'trn' => 'required',

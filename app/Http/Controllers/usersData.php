@@ -51,7 +51,7 @@ class usersData extends Controller
             "fname" => "required|string|min:2",
             "lname" => "required|string|min:2",
             "email" => "required|email",   
-            "password" => "required|min:8"
+            // "password" => "required|min:8"
         );
 
         $valid = Validator::make($request->all(), $rules);
